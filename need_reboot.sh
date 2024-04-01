@@ -20,16 +20,16 @@ SERVERS="nuc-vms nuc-dell"
 check() {
     # check if reboot is necessary
     # echo "$servername:$port"
-    resp=`ssh -p $port root@$servername "if [ -f /var/run/reboot-required ]; then echo \"1\"; else echo \"0\"; fi"`
+    resp=`ssh -p $SSH_PORT root@$servername "if [ -f /var/run/reboot-required ]; then echo \"1\"; else echo \"0\"; fi"`
     if [ $resp -eq 1 ]; then
-        echo "=> reboot <<< $servername:$port >>>"
+        echo "=> reboot <<< $servername:$SSH_PORT >>>"
     else
-        echo "<<< $servername:$port >>>"
+        echo "<<< $servername:$SSH_PORT >>>"
     fi
 }
 
 # SSH port to use
-port=22
+SSH_PORT=22
 for servername in $SERVERS; do
-    check $servername $port
+    check $servername $SSH_PORT
 done
